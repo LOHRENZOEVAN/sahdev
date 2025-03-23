@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Card animation effects
-    let cards = document.querySelectorAll(".card");
+    // Card animation effects with better performance
+    const cards = document.querySelectorAll(".card");
     cards.forEach(card => {
         card.addEventListener("mouseenter", function() {
             this.style.transform = "scale(1.05)";
@@ -10,67 +10,110 @@ document.addEventListener("DOMContentLoaded", function() {
             this.style.transform = "scale(1)";
         });
     });
- 
-    // Smooth scrolling for navigation
-    let navLinks = document.querySelectorAll(".nav-links a");
+    
+    // Smooth scrolling for navigation with improved targeting
+    const navLinks = document.querySelectorAll(".nav-links a");
     navLinks.forEach(link => {
         link.addEventListener("click", function(e) {
             e.preventDefault();
-            let targetId = this.getAttribute("href").substring(1);
-            let targetSection = document.getElementById(targetId);
+            const targetId = this.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
             if (targetSection) {
+                // Account for any fixed headers with a configurable offset
+                const headerOffset = 50;
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
                 window.scrollTo({
-                    top: targetSection.offsetTop - 50,
+                    top: offsetPosition,
                     behavior: "smooth"
                 });
             }
         });
     });
-
-    // Action slider functionality
-    let slider = document.querySelector(".slider");
-    let slides = document.querySelectorAll(".slide");
+    
+    // Main slider functionality with improved transitions and controls
+    const slider = document.querySelector(".slider");
+    const slides = document.querySelectorAll(".slide");
     let index = 0;
-    let totalSlides = slides.length;
-
+    const totalSlides = slides.length;
+    let sliderInterval;
+    
     function updateSlider() {
         slider.style.transition = "transform 0.8s ease-in-out";
         slider.style.transform = `translateX(-${index * 100}%)`;
     }
-
-    function moveSlide() {
-        index++;
-        if (index >= totalSlides) {
-            index = 0;
-            slider.style.transition = "none"; // Reset transition for smooth looping
-            slider.style.transform = "translateX(0)";
-            setTimeout(() => {
-                slider.style.transition = "transform 0.8s ease-in-out";
-            }, 50);
-        }
+    
+    function moveSlide(direction = 1) {
+        index = (index + direction) % totalSlides;
+        if (index < 0) index = totalSlides - 1;
         updateSlider();
     }
-
-    setInterval(moveSlide, 5000);
+    
+    function startSliderAutoplay() {
+        stopSliderAutoplay(); // Clear any existing interval first
+        sliderInterval = setInterval(() => moveSlide(1), 5000);
+    }
+    
+    function stopSliderAutoplay() {
+        if (sliderInterval) {
+            clearInterval(sliderInterval);
+        }
+    }
+    
+    // Add slider controls (optional)
+    const prevButton = document.querySelector('.slider-prev');
+    const nextButton = document.querySelector('.slider-next');
+    
+    if (prevButton) {
+        prevButton.addEventListener('click', () => {
+            moveSlide(-1);
+            stopSliderAutoplay();
+            startSliderAutoplay();
+        });
+    }
+    
+    if (nextButton) {
+        nextButton.addEventListener('click', () => {
+            moveSlide(1);
+            stopSliderAutoplay();
+            startSliderAutoplay();
+        });
+    }
+    
+    // Pause on hover
+    if (slider) {
+        slider.addEventListener('mouseenter', stopSliderAutoplay);
+        slider.addEventListener('mouseleave', startSliderAutoplay);
+    }
+    
+    // Initialize slider
     updateSlider();
-
-    // Gallery slider functionality
+    startSliderAutoplay();
+    
+    // Gallery slider functionality with improved state management
     const gallerySlider = document.querySelector('.gallery-slider');
     const gallerySlides = document.querySelectorAll('.gallery-slide');
     
     if (gallerySlider && gallerySlides.length > 0) {
         let currentGallerySlide = 0;
         const gallerySlideCount = gallerySlides.length;
+        let gallerySlideInterval;
         
-        // Function to show a specific gallery slide
+        // Function to show a specific gallery slide with fade effect
         function showGallerySlide(index) {
             // Hide all slides first
             gallerySlides.forEach(slide => {
+                slide.style.opacity = '0';
                 slide.style.display = 'none';
             });
             
-            // Show the current slide
+            // Show the current slide with fade-in effect
             gallerySlides[index].style.display = 'block';
+            setTimeout(() => {
+                gallerySlides[index].style.opacity = '1';
+                gallerySlides[index].style.transition = 'opacity 0.5s ease-in-out';
+            }, 50);
         }
         
         // Function to move to the next gallery slide
@@ -79,20 +122,82 @@ document.addEventListener("DOMContentLoaded", function() {
             showGallerySlide(currentGallerySlide);
         }
         
-        // Initialize the gallery by showing the first slide
+        // Function to move to the previous gallery slide
+        function prevGallerySlide() {
+            currentGallerySlide = (currentGallerySlide - 1 + gallerySlideCount) % gallerySlideCount;
+            showGallerySlide(currentGallerySlide);
+        }
+        
+        // Functions to control gallery autoplay
+        function startGalleryAutoplay() {
+            stopGalleryAutoplay(); // Clear any existing interval first
+            gallerySlideInterval = setInterval(nextGallerySlide, 5000);
+        }
+        
+        function stopGalleryAutoplay() {
+            if (gallerySlideInterval) {
+                clearInterval(gallerySlideInterval);
+                gallerySlideInterval = null;
+            }
+        }
+        
+        // Add gallery navigation controls (optional)
+        const galleryPrev = document.querySelector('.gallery-prev');
+        const galleryNext = document.querySelector('.gallery-next');
+        
+        if (galleryPrev) {
+            galleryPrev.addEventListener('click', () => {
+                prevGallerySlide();
+                stopGalleryAutoplay();
+                startGalleryAutoplay();
+            });
+        }
+        
+        if (galleryNext) {
+            galleryNext.addEventListener('click', () => {
+                nextGallerySlide();
+                stopGalleryAutoplay();
+                startGalleryAutoplay();
+            });
+        }
+        
+        // Pause slideshow when hovering over the gallery
+        gallerySlider.addEventListener('mouseenter', stopGalleryAutoplay);
+        
+        // Resume slideshow when mouse leaves the gallery
+        gallerySlider.addEventListener('mouseleave', startGalleryAutoplay);
+        
+        // Initialize the gallery
         showGallerySlide(0);
+        startGalleryAutoplay();
         
-        // Set interval to change gallery slides every 3 seconds
-        const gallerySlideInterval = setInterval(nextGallerySlide, 5000);
+        // Add touch support for mobile devices
+        let touchStartX = 0;
+        let touchEndX = 0;
         
-        // Optional: Pause slideshow when hovering over the gallery
-        gallerySlider.addEventListener('mouseenter', function() {
-            clearInterval(gallerySlideInterval);
-        });
+        gallerySlider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopGalleryAutoplay();
+        }, {passive: true});
         
-        // Optional: Resume slideshow when mouse leaves the gallery
-        gallerySlider.addEventListener('mouseleave', function() {
-            clearInterval(gallerySlideInterval);
-        });
+        gallerySlider.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                nextGallerySlide(); // Swipe left
+            } else if (touchEndX - touchStartX > 50) {
+                prevGallerySlide(); // Swipe right
+            }
+            startGalleryAutoplay();
+        }, {passive: true});
     }
+    
+    // Add accessibility support
+    document.querySelectorAll('.slide, .gallery-slide').forEach(slide => {
+        if (!slide.hasAttribute('aria-hidden')) {
+            slide.setAttribute('aria-hidden', 'true');
+        }
+        if (!slide.hasAttribute('tabindex')) {
+            slide.setAttribute('tabindex', '-1');
+        }
+    });
 });

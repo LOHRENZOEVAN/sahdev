@@ -85,7 +85,7 @@ body {
     font-size: 20px;
 }
 
-/* Slider Fixes */
+/* Slider Styles */
 .slider-container {
     width: 100%;
     overflow: hidden;
@@ -163,8 +163,45 @@ body {
     display: block; /* Show the first slide by default */
 }
 
+/* Slider Navigation Controls */
+.slider-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.slider-prev,
+.slider-next {
+    background: rgba(44, 95, 45, 0.7);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    transition: background 0.3s ease;
+}
+
+.slider-prev:hover,
+.slider-next:hover {
+    background: rgba(44, 95, 45, 1);
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+    .section {
+        padding: 30px 15px; /* Reduced padding on mobile */
+        margin: 15px 10px; /* Smaller margins */
+    }
+    
     .nav-links {
         flex-direction: column;
         align-items: center;
@@ -184,15 +221,46 @@ body {
     }
 
     .card {
-        width: 90%;
+        width: 100%; /* Full width on mobile */
+        padding: 15px;
+        box-sizing: border-box;
     }
 
+    /* Action Section Mobile Fixes */
     .slider-container {
         height: auto;
+        min-height: 350px; /* Minimum height for content */
+        padding: 10px 0;
+    }
+
+    .slider {
+        width: 100%;
+        flex-wrap: nowrap;
     }
 
     .slide {
-        padding: 15px;
+        padding: 15px 10px;
+        width: 100%;
+        height: auto;
+        min-height: 300px;
+        box-sizing: border-box;
+    }
+    
+    .slide h3 {
+        font-size: 1.4em; /* Smaller heading on mobile */
+        margin-top: 10px;
+        margin-bottom: 15px;
+        width: 100%;
+        word-wrap: break-word;
+    }
+    
+    .slide p {
+        font-size: 0.9em; /* Smaller text on mobile */
+        max-width: 95%; /* Wider text container */
+        margin: 0 auto;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
     }
     
     .gallery-container {
@@ -200,9 +268,62 @@ body {
     }
     
     .gallery-slider {
-        height: 300px; /* Smaller height on mobile devices */
+        height: 250px; /* Smaller height on mobile devices */
     }
-} 
+    
+    /* Improve slider controls on mobile */
+    .slider-controls {
+        bottom: 10px;
+    }
+    
+    .slider-prev,
+    .slider-next {
+        width: 35px;
+        height: 35px;
+        font-size: 1em;
+    }
+}
+
+/* Additional fixes for extra small screens */
+@media (max-width: 480px) {
+    .slide h3 {
+        font-size: 1.2em;
+        padding: 0 5px;
+    }
+    
+    .slide p {
+        font-size: 0.85em;
+        padding: 0 10px;
+        line-height: 1.4;
+    }
+    
+    .slider-container {
+        min-height: 400px; /* More space for content on very small screens */
+    }
+    
+    .slide {
+        min-height: 350px;
+    }
+    
+    .gallery-slider {
+        height: 200px;
+    }
+}
+
+/* Fix for browser compatibility */
+@supports (-webkit-overflow-scrolling: touch) {
+    /* CSS specific to iOS devices */
+    .slide {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+/* Animation for opacity transitions */
+.slide, .gallery-slide {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
 
 
 /* Add this to your existing styles.css file */
