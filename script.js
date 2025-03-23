@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
             this.style.transform = "scale(1)";
         });
     });
-
+ 
     // Smooth scrolling for navigation
     let navLinks = document.querySelectorAll(".nav-links a");
     navLinks.forEach(link => {
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updateSlider();
     }
 
-    setInterval(moveSlide, 3000);
+    setInterval(moveSlide, 5000);
     updateSlider();
 
     // Gallery slider functionality
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
         showGallerySlide(0);
         
         // Set interval to change gallery slides every 3 seconds
-        const gallerySlideInterval = setInterval(nextGallerySlide, 3000);
+        const gallerySlideInterval = setInterval(nextGallerySlide, 5000);
         
         // Optional: Pause slideshow when hovering over the gallery
         gallerySlider.addEventListener('mouseenter', function() {
