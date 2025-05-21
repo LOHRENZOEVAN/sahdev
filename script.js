@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
     
-    // Smooth scrolling for navigation with improved targeting
-    const navLinks = document.querySelectorAll(".nav-links a");
+    // Smooth scrolling for navigation with improved targeting - FIXED to only affect anchor links
+    const navLinks = document.querySelectorAll(".nav-links a[href^='#']");
     navLinks.forEach(link => {
         link.addEventListener("click", function(e) {
             e.preventDefault();
@@ -40,8 +40,10 @@ document.addEventListener("DOMContentLoaded", function() {
     let sliderInterval;
     
     function updateSlider() {
-        slider.style.transition = "transform 0.8s ease-in-out";
-        slider.style.transform = `translateX(-${index * 100}%)`;
+        if (slider) {
+            slider.style.transition = "transform 0.8s ease-in-out";
+            slider.style.transform = `translateX(-${index * 100}%)`;
+        }
     }
     
     function moveSlide(direction = 1) {
@@ -81,15 +83,16 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
     
-    // Pause on hover
-    if (slider) {
+    // Initialize slider if it exists
+    if (slider && slides.length > 0) {
+        // Pause on hover
         slider.addEventListener('mouseenter', stopSliderAutoplay);
         slider.addEventListener('mouseleave', startSliderAutoplay);
+        
+        // Initialize slider
+        updateSlider();
+        startSliderAutoplay();
     }
-    
-    // Initialize slider
-    updateSlider();
-    startSliderAutoplay();
     
     // Gallery slider functionality with improved state management
     const gallerySlider = document.querySelector('.gallery-slider');

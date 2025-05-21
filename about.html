@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - SAHDEV</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" href="s.png" type="image/png">
+    <style>
+        /* Inline CSS for About page */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+            margin-bottom: 50px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .about-intro {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .about-intro h2 {
+            color: #1b863d;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .about-intro p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .about-details-card {
+            background: #f5f7fa;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .about-details-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .about-details-card h3 {
+            color: #1b863d;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .about-details-card h3 i {
+            margin-right: 10px;
+        }
+        
+        .about-details-card p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .team-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .team-section h2 {
+            color: #1b863d;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .team-member {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-photo {
+            height: 250px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .team-photo i {
+            font-size: 5rem;
+            color: #999;
+        }
+        
+        .team-info {
+            padding: 20px;
+        }
+        
+        .team-info h3 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .team-info p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .team-social a {
+            color: #1b863d;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .team-social a:hover {
+            color: #155db1;
+        }
+
+        .values-section {
+            background-color: #f5f7fa;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .values-section h2 {
+            color: #1b863d;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .value-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .value-icon {
+            font-size: 2.5rem;
+            color: #1b863d;
+            margin-bottom: 20px;
+        }
+        
+        .value-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .value-card p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .about-details {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .about-intro h2, .team-section h2, .values-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+        }
+        
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="index.html#activities">Activities</a></li>
+            <li><a href="index.html#action">Action</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="get.html">Get Involved</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>About SAHDEV</h1>
+            <p>Learn about our mission, values, and the impact we're making</p>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="about-intro">
+            <h2>Who We Are</h2>
+            <p>Sustainable Action for Humanity and Development (SAHDEV) is a non-profit, apolitical, and inclusive organization based in Cameroon. SAHDEV was created on October 29, 2021, and registered with the Ministry of Territorial Administration with registration No. 40/E.29/1111/VOL.8/ALPAS by Law No. 90/035 of 19th December 1990. Our mission is to create a society where every individual can survive, be healthy, grow, and contribute to the socio-economic development of their community. We believe in empowering individuals through sustainable practices and humanitarian efforts.</p>
+        </div>
+
+        <div class="about-details">
+            <div class="about-details-card">
+                <h3><i class="fas fa-eye"></i> Our Vision</h3>
+                <p>SAHDEV envisions a world where communities are self-sufficient, resilient, and prosperous. We strive for a future where social justice, environmental sustainability, and economic opportunity are accessible to all people, regardless of their background or circumstances.</p>
+            </div>
+            <div class="about-details-card">
+                <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+                <p>Our mission is to create a society where every individual can survive, be healthy, grow, and contribute to the socio-economic development of their community through sustainable practices and humanitarian efforts that address the root causes of poverty, hunger, and inequality.</p>
+            </div>
+            <div class="about-details-card">
+                <h3><i class="fas fa-history"></i> Our History</h3>
+                <p>Founded in 2021, SAHDEV emerged from a collective desire to address pressing social and environmental challenges in Cameroon. What began as a small initiative has grown into an organization with a comprehensive approach to sustainable development and humanitarian action.</p>
+            </div>
+            <div class="about-details-card">
+                <h3><i class="fas fa-globe-africa"></i> Our Impact</h3>
+                <p>Since our establishment, we have implemented various initiatives that have positively impacted thousands of lives across Cameroon. Our work spans sustainable agriculture, youth empowerment, environmental conservation, and humanitarian relief efforts.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="values-section">
+        <h2>Our Core Values</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Integrity</h3>
+                <p>We uphold the highest standards of honesty, transparency, and ethical conduct in all our activities and interactions.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Inclusivity</h3>
+                <p>We embrace diversity and ensure that our programs and initiatives are accessible to all individuals, regardless of gender, ethnicity, religion, or socioeconomic status.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h3>Sustainability</h3>
+                <p>We are committed to implementing solutions that meet present needs without compromising the ability of future generations to meet their own needs.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h3>Empowerment</h3>
+                <p>We believe in equipping individuals and communities with the knowledge, skills, and resources they need to take charge of their own development.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <h2>Our Leadership Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="team-photo">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="team-info">
+                    <h3>Executive Director</h3>
+                    <p>Festus Ali</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="team-photo">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="team-info">
+                    <h3>Operations Manager</h3>
+                    <p>Anabel Vitsung</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="team-photo">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="team-info">
+                    <h3>Program Coordinator</h3>
+                    <p>Jane doe</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="footer">
+        <h2>Get to us</h2>
+        <div class="contact-info">
+            <p>Email: sustainablehumand@gmail.com</p>
+            <p>Phone: +237 670 878 192 / +237 677 897 520</p>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 SAHDEV - Sustainable Action for Humanity and Development. All Rights Reserved.</p>
+    </footer>
+
+    <script defer src="script.js"></script>
+</body>
+</html>
