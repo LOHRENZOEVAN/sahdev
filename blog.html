@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - SAHDEV | Stories of Impact and Change</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" href="s.png" type="image/png">
+    <style>
+        /* Blog-specific styles */
+        .blog-header {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            color: white;
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+
+        .blog-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .blog-main {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #2c5530;
+            background: white;
+            color: #2c5530;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #2c5530;
+            color: white;
+        }
+
+        .search-box {
+            margin-left: auto;
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 10px 40px 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            width: 250px;
+            font-size: 14px;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .blog-posts {
+            display: grid;
+            gap: 30px;
+        }
+
+        .blog-post {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-post-image {
+            height: 250px;
+            background: linear-gradient(45deg, #e9ecef, #f8f9fa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-post-content {
+            padding: 25px;
+        }
+
+        .blog-post-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .blog-category {
+            background: #2c5530;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .blog-post h2 {
+            color: #2c5530;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .blog-post h2 a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .blog-post h2 a:hover {
+            color: #4a7c59;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .blog-read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2c5530;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .blog-read-more:hover {
+            color: #4a7c59;
+        }
+
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-widget {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-widget h3 {
+            color: #2c5530;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .recent-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .recent-post {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .recent-post:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .recent-post-image {
+            width: 80px;
+            height: 60px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .recent-post-content h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .recent-post-content h4 a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .recent-post-content h4 a:hover {
+            color: #2c5530;
+        }
+
+        .recent-post-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .categories-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .category-item:last-child {
+            border-bottom: none;
+        }
+
+        .category-item a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .category-item a:hover {
+            color: #2c5530;
+        }
+
+        .category-count {
+            background: #f8f9fa;
+            color: #666;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .newsletter-signup {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter-signup h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-signup p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .newsletter-form button {
+            background: white;
+            color: #2c5530;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: #f8f9fa;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            text-decoration: none;
+            color: #666;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination a:hover {
+            border-color: #2c5530;
+            color: #2c5530;
+        }
+
+        .pagination .current {
+            background: #2c5530;
+            color: white;
+            border-color: #2c5530;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+
+            .blog-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 30px;
+            }
+
+            .blog-filters {
+                justify-content: center;
+            }
+
+            .search-box {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .blog-post-image {
+                height: 200px;
+            }
+
+            .blog-post h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Featured post styles */
+        .featured-post {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin-bottom: 40px;
+        }
+
+        .featured-post .blog-post-image {
+            height: 100%;
+            min-height: 300px;
+        }
+
+        .featured-post .blog-post-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .featured-post h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .featured-badge {
+            background: #ff6b35;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-post .blog-post-content {
+                padding: 25px;
+            }
+            
+            .featured-post h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="index.html#activities">Activities</a></li>
+            <li><a href="index.html#action">Action</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="get.html">Get Involved</a></li>
+        </ul>
+    </nav>
+
+    <header class="blog-header">
+        <h1>Our Blog</h1>
+        <p>Stories of impact, insights from the field, and updates on our mission to create sustainable change in communities worldwide</p>
+    </header>
+
+    <div class="blog-container">
+        <main class="blog-main">
+            <div class="blog-filters">
+                <button class="filter-btn active" data-category="all">All Posts</button>
+                <button class="filter-btn" data-category="community">Community Development</button>
+                <button class="filter-btn" data-category="agriculture">Agriculture</button>
+                <button class="filter-btn" data-category="environment">Environment</button>
+                <button class="filter-btn" data-category="women">Women Empowerment</button>
+                <button class="filter-btn" data-category="youth">Youth Programs</button>
+                <button class="filter-btn" data-category="wash">WASH</button>
+                
+                <div class="search-box">
+                    <input type="text" placeholder="Search blog posts..." id="blogSearch">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <div class="blog-posts" id="blogPosts">
+                <!-- Featured Post -->
+                <article class="blog-post featured-post" data-category="community">
+                    <div class="blog-post-image">
+                        <img src="gal12.jpg" alt="Featured post image">
+                    </div>
+                    <div class="blog-post-content">
+                        <span class="featured-badge">Featured Story</span>
+                        <div class="blog-post-meta">
+                            <span class="blog-category">Community Development</span>
+                            <span><i class="fas fa-calendar"></i> January 20, 2025</span>
+                            <span><i class="fas fa-user"></i> Sarah Johnson</span>
+                        </div>
+                        <h2><a href="#post-featured">Building Resilient Communities: A Year of Transformation</a></h2>
+                        <p class="blog-excerpt">
+                            Reflecting on 12 months of community development initiatives that have transformed lives across five regions. From establishing sustainable water systems to empowering local entrepreneurs, discover how collaborative efforts have created lasting change that continues to benefit thousands of families.
+                        </p>
+                        <a href="#post-featured" class="blog-read-more">
+                            Read Full Story <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Regular Blog Posts -->
+                <article class="blog-post" id="post-1" data-category="wash">
+                    <div class="blog-post-image">
+                        <img src="gal11.jpg" alt="Clean water access project">
+                    </div>
+                    <div class="blog-post-content">
+                        <div class="blog-post-meta">
+                            <span class="blog-category">WASH</span>
+                            <span><i class="fas fa-calendar"></i> January 15, 2025</span>
+                            <span><i class="fas fa-user"></i> Dr. Michael Nguema</span>
+                        </div>
+                        <h2><a href="#post-1">Transforming Lives Through Clean Water Access in Rural Communities</a></h2>
+                        <p class="blog-excerpt">
+                            Our latest WASH initiative has brought clean water to over 500 families in remote villages. This comprehensive project included drilling boreholes, installing solar-powered pumps, and training local communities in maintenance and hygiene practices. The impact has been profound: a 60% reduction in waterborne diseases and increased school attendance as children no longer need to walk miles for water.
+                        </p>
+                        <a href="#post-1" class="blog-read-more">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-post" id="post-2" data-category="agriculture">
+                    <div class="blog-post-image">
+                        <img src="gal10.jpg" alt="Climate-smart farming">
+                    </div>
+                    <div class="blog-post-content">
+                        <div class="blog-post-meta">
+                            <span class="blog-category">Agriculture</span>
+                            <span><i class="fas fa-calendar"></i> January 10, 2025</span>
+                            <span><i class="fas fa-user"></i> Agnes Mballa</span>
+                        </div>
+                        <h2><a href="#post-2">Climate-Smart Farming: Building Resilience in Agriculture</a></h2>
+                        <p class="blog-excerpt">
+                            Climate change poses significant challenges to smallholder farmers. Our climate-smart agriculture program introduces drought-resistant crops, sustainable irrigation techniques, and soil conservation methods. Over 200 farmers have increased their yields by 40% while reducing water usage and improving soil health for future generations.
+                        </p>
+                        <a href="#post-2" class="blog-read-more">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-post" id="post-3" data-category="women">
+                    <div class="blog-post-image">
+                        <img src="gal9.jpeg" alt="Women entrepreneurs">
+                    </div>
+                    <div class="blog-post-content">
+                        <div class="blog-post-meta">
+                            <span class="blog-category">Women Empowerment</span>
+                            <span><i class="fas fa-calendar"></i> June 2025</span>
+                            <span><i class="fas fa-user"></i> Patricia Ewane</span>
+                        </div>
+                        <h2><a href="#post-3">Empowering Women Entrepreneurs: Success Stories from Our Training Programs</a></h2>
+                        <p class="blog-excerpt">
+                            Meet the inspiring women who have transformed their communities through entrepreneurship. Our skills training and microfinance programs have enabled 150 women to start successful businesses, from poultry farming to textile production. These women are now role models, creating jobs and driving economic growth in their communities.
+                        </p>
+                        <a href="#post-3" class="blog-read-more">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="prev">&laquo; Previous</a>
+                <span class="current">1</span>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#" class="next">Next &raquo;</a>
+            </div>
+        </main>
+
+        <aside class="blog-sidebar">
+            <!-- Recent Posts Widget -->
+            <div class="sidebar-widget">
+                <h3>Recent Posts</h3>
+                <div class="recent-posts">
+                    <div class="recent-post">
+                        <div class="recent-post-image">📸</div>
+                        <div class="recent-post-content">
+                            <h4><a href="#post-featured">Building Resilient Communities: A Year of Transformation</a></h4>
+                            <div class="recent-post-date">January 20, 2025</div>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <div class="recent-post-image">💧</div>
+                        <div class="recent-post-content">
+                            <h4><a href="#post-1">Transforming Lives Through Clean Water Access</a></h4>
+                            <div class="recent-post-date">January 15, 2025</div>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <div class="recent-post-image">🌱</div>
+                        <div class="recent-post-content">
+                            <h4><a href="#post-2">Climate-Smart Farming: Building Resilience</a></h4>
+                            <div class="recent-post-date">January 10, 2025</div>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <div class="recent-post-image">👩‍💼</div>
+                        <div class="recent-post-content">
+                            <h4><a href="#post-3">Empowering Women Entrepreneurs</a></h4>
+                            <div class="recent-post-date">January 5, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="sidebar-widget">
+                <h3>Categories</h3>
+                <div class="categories-list">
+                    <div class="category-item">
+                        <a href="#" data-category="community">Community Development</a>
+                        <span class="category-count">8</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#" data-category="agriculture">Agriculture</a>
+                        <span class="category-count">12</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#" data-category="environment">Environment</a>
+                        <span class="category-count">6</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#" data-category="women">Women Empowerment</a>
+                        <span class="category-count">9</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#" data-category="youth">Youth Programs</a>
+                        <span class="category-count">7</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#" data-category="wash">WASH</a>
+                        <span class="category-count">5</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter Signup -->
+            <div class="sidebar-widget newsletter-signup">
+                <h3><i class="fas fa-envelope"></i> Stay Updated</h3>
+                <p>Get our latest stories and impact updates delivered to your inbox.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="sidebar-widget" style="background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; text-align: center;">
+                <h3 style="color: white;"><i class="fas fa-hands-helping"></i> Join Our Mission</h3>
+                <p>Help us create sustainable change in communities worldwide.</p>
+                <a href="get.html" style="background: white; color: #ff6b35; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 600; display: inline-block; margin-top: 10px;">Get Involved</a>
+            </div>
+        </aside>
+    </div>
+
+    <footer style="background: #2c5530; color: white; text-align: center; padding: 40px 20px;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px;">
+                <div>
+                    <h3>SAHDEV</h3>
+                    <p>Sustainable Action for Humanity and Development</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <p><a href="index.html" style="color: white; text-decoration: none;">Home</a></p>
+                    <p><a href="about.html" style="color: white; text-decoration: none;">About</a></p>
+                    <p><a href="get.html" style="color: white; text-decoration: none;">Get Involved</a></p>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p>Email: sustainablehumand@gmail.com</p>
+                    <p>Phone: +237 670 878 192</p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
+                <p>&copy; 2025 SAHDEV - Sustainable Action for Humanity and Development. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Blog filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const blogPosts = document.querySelectorAll('.blog-post');
+            const searchInput = document.getElementById('blogSearch');
+
+            // Filter by category
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter posts
+                    blogPosts.forEach(post => {
+                        if (category === 'all' || post.dataset.category === category) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                blogPosts.forEach(post => {
+                    const title = post.querySelector('h2').textContent.toLowerCase();
+                    const excerpt = post.querySelector('.blog-excerpt').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                });
+            });
+
+            // Newsletter form
+            document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for subscribing to our newsletter!');
+                this.reset();
+            });
+
+            // Category links in sidebar
+            document.querySelectorAll('.category-item a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const category = this.dataset.category;
+                    
+                    // Trigger the filter
+                    const filterBtn = document.querySelector(`[data-category="${category}"]`);
+                    if (filterBtn) {
+                        filterBtn.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
